@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore | Space Explorer</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <video autoplay loop muted playsinline class="space-background">
+        <source src="{{ url_for('static', filename='videos/stars.mp4') }}"
+                type="video/mp4">
+    </video>
+
+    <header class="site-header">
+
+        <a class="site-logo"
+           href="{{ url_for('home') }}">
+            Space Explorer
+        </a>
+
+        <nav>
+            <a href="#exoplanets">Exoplanets</a>
+            <a href="#asteroids">Asteroids</a>
+            <a href="#horizons">Solar System</a>
+        </nav>
+
+    </header>
+
+    <main class="explore-page">
+
+        <section class="explore-hero">
+
+            <p class="eyebrow">EXPLORE THE COSMOS</p>
+
+
+            <a class="primary-button" href="#exoplanets">
+                View Space Data
+            </a>
+
+        </section>
+
+        <section class="data-grid">
+
+            <article class="space-card" id="exoplanets">
+
+                <p class="card-label">NASA EXOPLANET ARCHIVE</p>
+
+                <h2>Exoplanet Explorer</h2>
+
+                <p>
+                    Discover planets beyond our solar system and compare
+                    their size, temperature, distance, and discovery method.
+                </p>
+
+                <div class="results">
+                    Exoplanet data will appear here.
+                </div>
+
+            </article>
+
+            <article class="space-card" id="asteroids">
+
+                <p class="card-label">NASA NEOWS</p>
+
+                <h2>Near-Earth Asteroids</h2>
+
+                <p>
+                    View asteroids approaching Earth and learn about their
+                    estimated size, speed, and closest approach.
+                </p>
+
+                <div class="results">
+                    Asteroid data will appear here.
+                </div>
+
+            </article>
+
+            <article class="space-card" id="horizons">
+
+                <p class="card-label">NASA JPL HORIZONS</p>
+
+                <h2>Solar System Positions</h2>
+
+                <p>
+                    Explore orbital information and positions for planets,
+                    moons, asteroids, and spacecraft.
+                </p>
+
+                <div class="results">
+                    Orbital data will appear here.
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Space Explorer — built by https://github.com/eeriffel</p>
+    </footer>
+
+</body>
+
+</html>
