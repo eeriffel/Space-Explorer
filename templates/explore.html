@@ -66,7 +66,7 @@
         <details class="planet-card">
 
             <summary>
-                <span class="planet-icon">◉</span>
+                <span class="planet-icon">•</span>
                 <span>{{ planet.pl_name }}</span>
                 <span class="open-label">View details</span>
             </summary>
@@ -135,9 +135,102 @@
                     estimated size, speed, and closest approach.
                 </p>
 
-                <div class="results">
-                    Asteroid data will appear here.
-                </div>
+                <div class="result-grid">
+
+    {% for asteroid in asteroids %}
+
+        <details class="planet-card">
+
+            <summary>
+                <span class="planet-icon">•</span>
+
+                <span>{{ asteroid.name }}</span>
+
+                <span class="open-label">
+                    View details
+                </span>
+            </summary>
+
+            <div class="planet-details">
+
+                <p>
+                    <strong>Approach date:</strong>
+
+                    {{
+                        asteroid.close_approach_data[0]
+                        .close_approach_date
+                    }}
+                </p>
+
+                <p>
+                    <strong>Estimated diameter:</strong>
+
+                    {{
+                        asteroid.estimated_diameter.meters
+                        .estimated_diameter_min | round(1)
+                    }}
+
+                    –
+
+                    {{
+                        asteroid.estimated_diameter.meters
+                        .estimated_diameter_max | round(1)
+                    }}
+
+                    meters
+                </p>
+
+                <p>
+                    <strong>Speed:</strong>
+
+                    {{
+                        asteroid.close_approach_data[0]
+                        .relative_velocity
+                        .kilometers_per_hour
+                        | float
+                        | round(0)
+                    }}
+
+                    km/h
+                </p>
+
+                <p>
+                    <strong>Miss distance:</strong>
+
+                    {{
+                        asteroid.close_approach_data[0]
+                        .miss_distance
+                        .kilometers
+                        | float
+                        | round(0)
+                    }}
+
+                    kilometers
+                </p>
+
+                <p>
+                    <strong>Potentially hazardous:</strong>
+
+                    {% if asteroid.is_potentially_hazardous_asteroid %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}
+                </p>
+
+            </div>
+
+        </details>
+
+    {% else %}
+
+        <div class="results">
+            No asteroid information is currently available.
+        </div>
+
+    {% endfor %}
+
+</div>
 
             </article>
 
