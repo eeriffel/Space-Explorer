@@ -55,13 +55,72 @@
                 <h2>Exoplanet Explorer</h2>
 
                 <p>
-                    Discover planets beyond our solar system and compare
-                    their size, temperature, distance, and discovery method.
+                    Discover the six nearest known exoplanets, with data updated hourly.
+
                 </p>
 
-                <div class="results">
-                    Exoplanet data will appear here.
-                </div>
+                <div class="result-grid">
+
+    {% for planet in exoplanets %}
+
+        <details class="planet-card">
+
+            <summary>
+                <span class="planet-icon">◉</span>
+                <span>{{ planet.pl_name }}</span>
+                <span class="open-label">View details</span>
+            </summary>
+
+            <div class="planet-details">
+
+                <p>
+                    <strong>Host star:</strong>
+                    {{ planet.hostname }}
+                </p>
+
+                <p>
+                    <strong>Discovery year:</strong>
+                    {{ planet.disc_year | int }}
+                </p>
+
+                <p>
+                    <strong>Discovery method:</strong>
+                    {{ planet.discoverymethod }}
+                </p>
+
+                <p>
+                    <strong>Distance:</strong>
+
+                    {% if planet.sy_dist %}
+                        {{ planet.sy_dist | round(1) }} parsecs
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </p>
+
+                <p>
+                    <strong>Radius:</strong>
+
+                    {% if planet.pl_rade %}
+                        {{ planet.pl_rade | round(2) }} Earths
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </p>
+
+            </div>
+
+        </details>
+
+    {% else %}
+
+        <div class="results">
+            Exoplanet data is temporarily unavailable.
+        </div>
+
+    {% endfor %}
+
+</div>
 
             </article>
 
@@ -104,8 +163,15 @@
     </main>
 
     <footer>
-        <p>Space Explorer — built by https://github.com/eeriffel</p>
-    </footer>
+      <p>
+        Space Explorer — built by
+        <a href="https://github.com/eeriffel"
+           target="_blank"
+           rel="noopener noreferrer">
+            https://github.com/eeriffel
+        </a>
+    </p>
+</footer>
 
 </body>
 

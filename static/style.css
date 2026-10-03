@@ -1,4 +1,4 @@
-/* Page setup */
+
 
 * {
     box-sizing: border-box;
@@ -25,12 +25,14 @@ body::before {
     background:
         linear-gradient(
             rgba(2, 6, 23, 0.35),
-            rgba(2, 6, 23, 0.75)
+            rgba(2, 6, 23, 0.8)
         );
 }
 
 
-/* Moving background */
+/* ---------------------------------
+   Moving space background
+---------------------------------- */
 
 .space-background {
     position: fixed;
@@ -43,10 +45,13 @@ body::before {
 }
 
 
-/* Shared text */
+/* ---------------------------------
+   Shared typography
+---------------------------------- */
 
 h1,
 h2,
+h3,
 p {
     margin-top: 0;
 }
@@ -74,7 +79,9 @@ p {
 }
 
 
-/* Buttons */
+/* ---------------------------------
+   Shared buttons
+---------------------------------- */
 
 .primary-button {
     display: inline-block;
@@ -88,8 +95,8 @@ p {
     text-decoration: none;
     transition:
         background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
 .primary-button:hover {
@@ -99,7 +106,9 @@ p {
 }
 
 
-/* Homepage */
+/* ---------------------------------
+   Homepage
+---------------------------------- */
 
 .home-page {
     display: flex;
@@ -134,7 +143,9 @@ p {
 }
 
 
-/* Explore navigation */
+/* ---------------------------------
+   Explore-page navigation
+---------------------------------- */
 
 .site-header {
     position: sticky;
@@ -156,6 +167,10 @@ p {
     text-decoration: none;
 }
 
+.site-logo:hover {
+    color: #67e8f9;
+}
+
 nav {
     display: flex;
     gap: 24px;
@@ -164,6 +179,7 @@ nav {
 nav a {
     color: #cbd5e1;
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 nav a:hover {
@@ -171,7 +187,9 @@ nav a:hover {
 }
 
 
-/* Explore page */
+/* ---------------------------------
+   Explore-page introduction
+---------------------------------- */
 
 .explore-page {
     width: 90%;
@@ -203,7 +221,9 @@ nav a:hover {
 }
 
 
-/* Data sections */
+/* ---------------------------------
+   Main API sections
+---------------------------------- */
 
 .data-grid {
     display: grid;
@@ -230,6 +250,105 @@ nav a:hover {
     color: #cbd5e1;
 }
 
+
+/* ---------------------------------
+   API result grid
+---------------------------------- */
+
+.result-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+}
+
+
+/* ---------------------------------
+   Clickable exoplanet cards
+---------------------------------- */
+
+.planet-card {
+    overflow: hidden;
+    border: 1px solid rgba(103, 232, 249, 0.25);
+    border-radius: 14px;
+    background-color: rgba(15, 23, 42, 0.88);
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.planet-card:hover {
+    border-color: #67e8f9;
+    box-shadow: 0 0 22px rgba(103, 232, 249, 0.18);
+    transform: translateY(-3px);
+}
+
+.planet-card summary {
+    display: flex;
+    min-height: 150px;
+    cursor: pointer;
+    list-style: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+}
+
+.planet-card summary::-webkit-details-marker {
+    display: none;
+}
+
+.planet-icon {
+    margin-bottom: 12px;
+    color: #67e8f9;
+    font-size: 2.5rem;
+    text-shadow: 0 0 18px rgba(103, 232, 249, 0.6);
+}
+
+.planet-card summary span:nth-child(2) {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.open-label {
+    margin-top: 10px;
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+.planet-details {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: rgba(2, 6, 23, 0.65);
+}
+
+.planet-details p {
+    margin: 8px 0;
+    color: #cbd5e1;
+}
+
+.planet-details strong {
+    color: white;
+}
+
+.planet-card[open] {
+    border-color: #67e8f9;
+    box-shadow: 0 0 24px rgba(103, 232, 249, 0.15);
+}
+
+.planet-card[open] .open-label {
+    color: #67e8f9;
+}
+
+
+/* ---------------------------------
+   Empty API placeholders
+---------------------------------- */
+
 .results {
     margin-top: 24px;
     padding: 24px;
@@ -240,12 +359,14 @@ nav a:hover {
 }
 
 
-/* Footer */
+/* ---------------------------------
+   Footer
+---------------------------------- */
 
 footer {
     padding: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
-    background-color: rgba(2, 6, 23, 0.85);
+    background-color: rgba(2, 6, 23, 0.88);
     color: #94a3b8;
     text-align: center;
 }
@@ -254,8 +375,20 @@ footer p {
     margin: 0;
 }
 
+footer a {
+    color: #67e8f9;
+    font-weight: bold;
+    text-decoration: none;
+}
 
-/* Smaller screens */
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------------------------------
+   Tablet and phone layout
+---------------------------------- */
 
 @media (max-width: 700px) {
     .site-header {
@@ -272,7 +405,16 @@ footer p {
         padding: 45px 24px;
     }
 
+    .explore-hero {
+        min-height: 65vh;
+        padding: 60px 10px;
+    }
+
     .space-card {
         padding: 28px 22px;
+    }
+
+    .result-grid {
+        grid-template-columns: 1fr;
     }
 }
