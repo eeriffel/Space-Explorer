@@ -7,21 +7,24 @@
 
     <title>Explore | Space Explorer</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
 
 <body>
 
     <video autoplay loop muted playsinline class="space-background">
-        <source src="{{ url_for('static', filename='videos/stars.mp4') }}"
-                type="video/mp4">
+        <source
+            src="{{ url_for('static', filename='videos/stars.mp4') }}"
+            type="video/mp4"
+        >
     </video>
 
     <header class="site-header">
 
-        <a class="site-logo"
-           href="{{ url_for('home') }}">
+        <a class="site-logo" href="{{ url_for('home') }}">
             Space Explorer
         </a>
 
@@ -39,7 +42,6 @@
 
             <p class="eyebrow">EXPLORE THE COSMOS</p>
 
-
             <a class="primary-button" href="#exoplanets">
                 View Space Data
             </a>
@@ -48,6 +50,8 @@
 
         <section class="data-grid">
 
+            <!-- Exoplanets -->
+
             <article class="space-card" id="exoplanets">
 
                 <p class="card-label">NASA EXOPLANET ARCHIVE</p>
@@ -55,184 +59,161 @@
                 <h2>Exoplanet Explorer</h2>
 
                 <p>
-                    Discover the six nearest known exoplanets, with data updated hourly.
-
+                    Discover the six nearest known exoplanets,
+                    with data updated hourly.
                 </p>
 
                 <div class="result-grid">
 
-    {% for planet in exoplanets %}
+                    {% for planet in exoplanets %}
 
-        <details class="planet-card">
+                        <details class="planet-card">
 
-            <summary>
-                <span class="planet-icon">•</span>
-                <span>{{ planet.pl_name }}</span>
-                <span class="open-label">View details</span>
-            </summary>
+                            <summary>
+                                <span class="planet-icon">•</span>
 
-            <div class="planet-details">
+                                <span>{{ planet.pl_name }}</span>
 
-                <p>
-                    <strong>Host star:</strong>
-                    {{ planet.hostname }}
-                </p>
+                                <span class="open-label">
+                                    View details
+                                </span>
+                            </summary>
 
-                <p>
-                    <strong>Discovery year:</strong>
-                    {{ planet.disc_year | int }}
-                </p>
+                            <div class="planet-details">
 
-                <p>
-                    <strong>Discovery method:</strong>
-                    {{ planet.discoverymethod }}
-                </p>
+                                <p>
+                                    <strong>Host star:</strong>
+                                    {{ planet.hostname or "Unknown" }}
+                                </p>
 
-                <p>
-                    <strong>Distance:</strong>
+                                <p>
+                                    <strong>Discovery method:</strong>
+                                    {{ planet.discoverymethod or "Unknown" }}
+                                </p>
 
-                    {% if planet.sy_dist %}
-                        {{ planet.sy_dist | round(1) }} parsecs
+                                <p>
+                                    <strong>Distance:</strong>
+
+                                    {% if planet.sy_dist is not none %}
+                                        {{ planet.sy_dist | round(1) }}
+                                        parsecs
+                                    {% else %}
+                                        Unknown
+                                    {% endif %}
+                                </p>
+
+                                <p>
+                                    <strong>Radius:</strong>
+
+                                    {% if planet.pl_rade is not none %}
+                                        {{ planet.pl_rade | round(2) }}
+                                        Earth radii
+                                    {% else %}
+                                        Unknown
+                                    {% endif %}
+                                </p>
+
+                                <p>
+                                    <strong>Temperature:</strong>
+
+                                    {% if planet.pl_eqt is not none %}
+                                        {{ planet.pl_eqt | round(0) }} K
+                                    {% else %}
+                                        Unknown
+                                    {% endif %}
+                                </p>
+
+                            </div>
+
+                        </details>
+
                     {% else %}
-                        Unknown
-                    {% endif %}
-                </p>
 
-                <p>
-                    <strong>Radius:</strong>
+                        <div class="results">
+                            Exoplanet data is temporarily unavailable.
+                        </div>
 
-                    {% if planet.pl_rade %}
-                        {{ planet.pl_rade | round(2) }} Earths
-                    {% else %}
-                        Unknown
-                    {% endif %}
-                </p>
+                    {% endfor %}
 
-            </div>
-
-        </details>
-
-    {% else %}
-
-        <div class="results">
-            Exoplanet data is temporarily unavailable.
-        </div>
-
-    {% endfor %}
-
-</div>
+                </div>
 
             </article>
+
+            <!-- Near-Earth asteroids -->
 
             <article class="space-card" id="asteroids">
 
                 <p class="card-label">NASA NEOWS</p>
 
-                <h2>Near-Earth Asteroids</h2>
+                <h2>Near Earth Asteroids</h2>
 
                 <p>
-                    View asteroids approaching Earth and learn about their
-                    estimated size, speed, and closest approach.
+                    View six of today's closest asteroid approaches,
+                    with data updated hourly.
                 </p>
 
                 <div class="result-grid">
 
-    {% for asteroid in asteroids %}
+                    {% for asteroid in asteroids %}
 
-        <details class="planet-card">
+                        <details class="planet-card">
 
-            <summary>
-                <span class="planet-icon">•</span>
+                            <summary>
+                                <span class="planet-icon">•</span>
 
-                <span>{{ asteroid.name }}</span>
+                                <span>{{ asteroid.name }}</span>
 
-                <span class="open-label">
-                    View details
-                </span>
-            </summary>
+                                <span class="open-label">
+                                    View details
+                                </span>
+                            </summary>
 
-            <div class="planet-details">
+                            <div class="planet-details">
 
-                <p>
-                    <strong>Approach date:</strong>
+                                <p>
+                                    <strong>Estimated diameter:</strong>
+                                    {{ asteroid.diameter }} km
+                                </p>
 
-                    {{
-                        asteroid.close_approach_data[0]
-                        .close_approach_date
-                    }}
-                </p>
+                                <p>
+                                    <strong>Speed:</strong>
+                                    {{ "{:,.0f}".format(asteroid.speed) }}
+                                    km/h
+                                </p>
 
-                <p>
-                    <strong>Estimated diameter:</strong>
+                                <p>
+                                    <strong>Miss distance:</strong>
+                                    {{ "{:,.0f}".format(asteroid.distance) }}
+                                    kilometers
+                                </p>
 
-                    {{
-                        asteroid.estimated_diameter.meters
-                        .estimated_diameter_min | round(1)
-                    }}
+                                <p>
+                                    <strong>Potentially hazardous:</strong>
 
-                    –
+                                    {% if asteroid.hazardous %}
+                                        Yes
+                                    {% else %}
+                                        No
+                                    {% endif %}
+                                </p>
 
-                    {{
-                        asteroid.estimated_diameter.meters
-                        .estimated_diameter_max | round(1)
-                    }}
+                            </div>
 
-                    meters
-                </p>
+                        </details>
 
-                <p>
-                    <strong>Speed:</strong>
-
-                    {{
-                        asteroid.close_approach_data[0]
-                        .relative_velocity
-                        .kilometers_per_hour
-                        | float
-                        | round(0)
-                    }}
-
-                    km/h
-                </p>
-
-                <p>
-                    <strong>Miss distance:</strong>
-
-                    {{
-                        asteroid.close_approach_data[0]
-                        .miss_distance
-                        .kilometers
-                        | float
-                        | round(0)
-                    }}
-
-                    kilometers
-                </p>
-
-                <p>
-                    <strong>Potentially hazardous:</strong>
-
-                    {% if asteroid.is_potentially_hazardous_asteroid %}
-                        Yes
                     {% else %}
-                        No
-                    {% endif %}
-                </p>
 
-            </div>
+                        <div class="results">
+                            No asteroid information is currently available.
+                        </div>
 
-        </details>
+                    {% endfor %}
 
-    {% else %}
-
-        <div class="results">
-            No asteroid information is currently available.
-        </div>
-
-    {% endfor %}
-
-</div>
+                </div>
 
             </article>
+
+            <!-- Solar-system positions -->
 
             <article class="space-card" id="horizons">
 
@@ -241,12 +222,60 @@
                 <h2>Solar System Positions</h2>
 
                 <p>
-                    Explore orbital information and positions for planets,
-                    moons, asteroids, and spacecraft.
+                    View the current position of each planet and its
+                    distance from the Sun, with data updated hourly.
                 </p>
 
-                <div class="results">
-                    Orbital data will appear here.
+                <div class="result-grid">
+
+                    {% for planet in planet_positions %}
+
+                        <details class="planet-card">
+
+                            <summary>
+                                <span class="planet-icon">•</span>
+
+                                <span>{{ planet.name }}</span>
+
+                                <span class="open-label">
+                                    View details
+                                </span>
+                            </summary>
+
+                            <div class="planet-details">
+
+                                <p>
+                                    <strong>Distance from Sun:</strong>
+                                    {{ planet.distance }} AU
+                                </p>
+
+                                <p>
+                                    <strong>X position:</strong>
+                                    {{ planet.x }} AU
+                                </p>
+
+                                <p>
+                                    <strong>Y position:</strong>
+                                    {{ planet.y }} AU
+                                </p>
+
+                                <p>
+                                    <strong>Z position:</strong>
+                                    {{ planet.z }} AU
+                                </p>
+
+                            </div>
+
+                        </details>
+
+                    {% else %}
+
+                        <div class="results">
+                            Planet-position data is temporarily unavailable.
+                        </div>
+
+                    {% endfor %}
+
                 </div>
 
             </article>
@@ -256,15 +285,18 @@
     </main>
 
     <footer>
-      <p>
-        Space Explorer — built by
-        <a href="https://github.com/eeriffel"
-           target="_blank"
-           rel="noopener noreferrer">
-            https://github.com/eeriffel
-        </a>
-    </p>
-</footer>
+        <p>
+            Space Explorer — built by
+
+            <a
+                href="https://github.com/eeriffel"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                https://github.com/eeriffel
+            </a>
+        </p>
+    </footer>
 
 </body>
 
