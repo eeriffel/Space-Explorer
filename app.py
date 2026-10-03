@@ -260,6 +260,9 @@ def explore():
         planet_positions=planet_positions
     )
 
+@app.route("/google37d72f75cf213628.html")
+def google_verification():
+    return "google-site-verification: google37d72f75cf213628.html"
 
 if __name__ == "__main__":
     app.run(debug=True)
